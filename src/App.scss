@@ -1,0 +1,230 @@
+.App {
+	display: grid;
+	grid-template-rows: 60px 1fr;
+	height: 100vh;
+	width: 100vw;
+
+	header {
+		background-color: #f0f2f5;
+		display: grid;
+		grid-template-columns: auto 1fr;
+		align-items: center;
+		height: 60px;
+		.logo {
+			display: grid;
+			align-items: center;
+			justify-content: center;
+			grid-template-columns: 60px 1fr;
+			img {
+				height: 50px;
+			}
+			h1 {
+				font-size: 15px;
+				margin: 0;
+			}
+			h2 {
+				font-size: 12px;
+				margin: 0;
+				font-weight: 400;
+			}
+		}
+		.user {
+			display: flex;
+			flex-direction: row-reverse;
+		}
+	}
+
+	.sign-in {
+		display: grid;
+		height: calc(100vh - 60px);
+		background-color: #fff;
+		align-items: center;
+		justify-content: center;
+		button {
+			display: grid;
+			grid-template-columns: 60px 1fr;
+			outline: none;
+			align-items: center;
+			border: none;
+			padding: 10px 10px 10px 5px;
+			border-radius: 5px;
+			background-color: #306ccf;
+			cursor: pointer;
+			color: #fff;
+			img {
+				width: 40px;
+			}
+		}
+	}
+
+	.sign-out {
+		display: grid;
+		grid-template-columns: 60px 60px;
+		height: 60px;
+		align-items: center;
+		.avatar {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+		}
+		button {
+			height: 60px;
+			display: grid;
+			align-items: center;
+			justify-content: center;
+			border: none;
+			background-color: transparent;
+			cursor: pointer;
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.06);
+			}
+			img {
+				height: 35px;
+				display: block;
+			}
+		}
+	}
+
+	.chat-room {
+		display: grid;
+		height: calc(100vh - 60px);
+		align-items: center;
+		justify-content: center;
+		grid-template-rows: 1fr 60px;
+
+		position: relative;
+
+		&::before {
+			content: ' ';
+			display: block;
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			opacity: 0.6;
+			background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/dot-grid.png');
+			//background-repeat: no-repeat;
+			//background-position: 50% 0;
+			//background-size: cover;
+		}
+
+		main {
+			height: calc(100vh - 120px);
+			display: block;
+			overflow: auto;
+			width: 100vw;
+			padding: 30px;
+			position: relative;
+
+			&::-webkit-scrollbar {
+				width: 0.55rem;
+			}
+
+			&::-webkit-scrollbar-track {
+				background: #3333;
+			}
+
+			&::-webkit-scrollbar-thumb {
+				background: #ffca27;
+			}
+
+			.message {
+				display: flex;
+				align-items: center;
+				margin-bottom: 10px;
+				.display-message {
+					display: grid;
+					grid-template-rows: auto 1fr auto;
+					strong {
+						display: block;
+						font-size: 12px;
+                        color: rgba(0,0,0,0.5)
+					}
+					p {
+						padding: 0;
+						margin: 0;
+						font-size: 14px;
+					}
+                    small{
+                        font-size: 10px;
+                        text-align: right;
+                        margin-top: 5px;
+                        color: rgba(0,0,0,0.5)
+                    }
+				}
+
+				.bubble {
+					display: flex;
+					background-color: #f2f2f2;
+					border-radius: 10px;
+					align-items: center;
+				}
+
+				.avatar {
+					width: 20px;
+					height: 20px;
+					border-radius: 50%;
+					margin: 2px 5px;
+				}
+				&.sent {
+					flex-direction: row-reverse;
+					.bubble {
+						flex-direction: row-reverse;
+						padding: 5px 10px;
+					}
+				}
+				&.sent p {
+					align-self: flex-end;
+				}
+				&.received {
+					.bubble {
+						padding: 10px 20px 10px 5px;
+					}
+				}
+			}
+		}
+
+
+		.form {
+			background-color: #f0f2f5;
+			display: grid;
+			height: 60px;
+			align-items: center;
+			position: relative;
+            padding: 0 30px;
+
+            form{
+                display: grid;
+                grid-template-columns: 1fr 60px;
+                grid-gap: 20px;
+                input[type=text]{
+                    display: flex;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    height: 40px;
+                    padding: 0 20px;
+                    outline: none;
+                }
+                button[type=submit]{
+                    display: grid;
+                    width: 40px;
+                    height: 40px;
+                    background: #ffca27;
+                    border-radius: 50%;
+                    border: none;
+                    outline: none;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    img{
+                        display: block;
+                        width: 25px;
+                    }
+
+                }
+            }
+
+		}
+	}
+}

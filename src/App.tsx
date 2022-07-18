@@ -5,11 +5,7 @@ import {useAuthState} from 'react-firebase-hooks/auth'
 import {useCollectionData} from 'react-firebase-hooks/firestore'
 
 import {initializeApp} from 'firebase/app'
-import {
-	getAuth,
-	GoogleAuthProvider,
-	signInWithPopup,
-} from 'firebase/auth'
+import {getAuth, GoogleAuthProvider, signInWithPopup} from 'firebase/auth'
 import {
 	getFirestore,
 	collection,
@@ -39,8 +35,21 @@ function App() {
 
 	return (
 		<div className='App'>
-			<header>Chat 	<SignOut /></header>
-			<section>{user ? <ChatRoom /> : <SignIn />}</section>
+			<header>
+				<div className='logo'>
+					<div>
+						<img src='/logo.png' />
+					</div>
+					<div>
+						<h1> Firechat</h1>
+						<h2>React Firebase Chat</h2>
+					</div>
+				</div>
+				<div className='user'>
+					<SignOut />
+				</div>
+			</header>
+			{user ? <ChatRoom /> : <SignIn />}
 		</div>
 	)
 }
@@ -52,20 +61,33 @@ function SignIn() {
 	}
 	return (
 		<>
-			<button className='sign-in' onClick={signInWithGoogle}>
-				Entra com a conta do Google
-			</button>
+			<div className='sign-in'>
+				<button onClick={signInWithGoogle}>
+					<div>
+						<img src='/google.png' />
+					</div>
+					<div>Sign in with Google</div>
+				</button>
+			</div>
 		</>
 	)
 }
 
 function SignOut() {
-
 	return (
 		auth.currentUser && (
-			<button className='sign-out' onClick={() => auth.signOut()}>
-				Sair {auth.currentUser.displayName}
-			</button>
+			<div className='sign-out'>
+				<img
+					className='avatar'
+					src={
+						auth?.currentUser?.photoURL ||
+						'https://api.adorable.io/avatars/23/abott@adorable.png'
+					}
+				/>
+				<button onClick={() => auth.signOut()}>
+					<img src='./logout.png' />
+				</button>
+			</div>
 		)
 	)
 }
@@ -96,49 +118,74 @@ function ChatRoom() {
 		})
 
 		setFormValue('')
-		//forceBottomScrollElement.current.scrollIntoView({behavior: 'smooth'})
+		forceBottomScrollElement?.current?.scrollIntoView({behavior: 'smooth'})
 	}
 
 	return (
 		<>
-			<main>
-				{messages &&
-					messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+			<div className='chat-room'>
+				<main>
+					{messages &&
+						messages.map((msg, index) => (
+							<ChatMessage key={index} message={msg} />
+						))}
 
-				<span ref={forceBottomScrollElement}></span>
-			</main>
+					<span ref={forceBottomScrollElement}></span>
+				</main>
+				<div className='form'>
+					<form onSubmit={sendMessage}>
+						<input
+							value={formValue}
+							onChange={(e) => setFormValue(e.target.value)}
+							placeholder='Vamos conversar'
+							type='text'
+						/>
 
-			<form onSubmit={sendMessage}>
-				<input
-					value={formValue}
-					onChange={(e) => setFormValue(e.target.value)}
-					placeholder='Vamos conversar'
-				/>
-
-				<button type='submit' disabled={!formValue}>
-					Enviar
-				</button>
-			</form>
+						<button type='submit' disabled={!formValue}>
+							<img src='./sent.png' />
+						</button>
+					</form>
+				</div>
+			</div>
 		</>
 	)
 }
 
 function ChatMessage(props: any) {
-	const {text, uid, photoURL} = props.message
+	const {text, uid, photoURL, createdAt} = props.message
+
+	const sentTime = new Date(createdAt?.seconds * 1000).toLocaleTimeString([], {
+		hour: '2-digit',
+		minute: '2-digit',
+	})
 
 	const messageClass = uid === auth?.currentUser?.uid ? 'sent' : 'received'
-
-	console.log(text)
 
 	return (
 		<>
 			<div className={`message ${messageClass}`}>
-				<img
-					src={
-						photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'
-					}
-				/>
-				<p>{text}</p>
+				<div className='bubble'>
+					{messageClass === 'sent' ? (
+						''
+					) : (
+						<img
+							className='avatar'
+							src={
+								photoURL ||
+								'https://api.adorable.io/avatars/23/abott@adorable.png'
+							}
+						/>
+					)}
+					<div className='display-message'>
+						{messageClass === 'sent' ? (
+							''
+						) : (
+							<strong>{auth?.currentUser?.displayName}</strong>
+						)}
+						<p>{text}</p>
+						<small>{sentTime === 'Invalid Date' ? '' : sentTime}</small>
+					</div>
+				</div>
 			</div>
 		</>
 	)
