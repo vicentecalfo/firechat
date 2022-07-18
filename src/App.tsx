@@ -17,13 +17,13 @@ import {
 } from 'firebase/firestore'
 
 const firebaseConfig = {
-	apiKey: process.env.API_KEY,
-	authDomain: process.env.AUTH_DOMAIN,
-	projectId: process.env.PROJECT_ID,
-	storageBucket: process.env.STORAGE_BUCKET,
-	messagingSenderId: process.env.MESSAGING_SENDER_ID,
-	appId: process.env.APP_ID,
-	measurementId: process.env.MEASUREMENT_ID,
+  apiKey: 'AIzaSyCSLCiL9bzc5AKIRPkpvLblDY9eVtzWxGg',
+  authDomain: 'real-time-chat-5b1d5.firebaseapp.com',
+  projectId: 'real-time-chat-5b1d5',
+  storageBucket: 'real-time-chat-5b1d5.appspot.com',
+  messagingSenderId: '819899231653',
+  appId: '1:819899231653:web:5abd4fe4654f2c82a08c4c',
+  measurementId: 'G-HWNJZPF5K5',
 }
 
 const firebaseApp = initializeApp(firebaseConfig)
