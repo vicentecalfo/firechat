@@ -17,13 +17,13 @@ import {
 } from 'firebase/firestore'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCSLCiL9bzc5AKIRPkpvLblDY9eVtzWxGg',
-  authDomain: 'real-time-chat-5b1d5.firebaseapp.com',
-  projectId: 'real-time-chat-5b1d5',
-  storageBucket: 'real-time-chat-5b1d5.appspot.com',
-  messagingSenderId: '819899231653',
-  appId: '1:819899231653:web:5abd4fe4654f2c82a08c4c',
-  measurementId: 'G-HWNJZPF5K5',
+	apiKey: process.env.REACT_APP_API_KEY,
+	authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+	projectId: process.env.REACT_APP_PROJECT_ID,
+	storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+	messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+	appId: process.env.REACT_APP_APP_ID,
+	measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 }
 
 const firebaseApp = initializeApp(firebaseConfig)
@@ -115,7 +115,7 @@ function ChatRoom() {
 			createdAt: serverTimestamp(),
 			uid,
 			photoURL,
-      displayName
+			displayName,
 		})
 
 		setFormValue('')
@@ -178,11 +178,7 @@ function ChatMessage(props: any) {
 						/>
 					)}
 					<div className='display-message'>
-						{messageClass === 'sent' ? (
-							''
-						) : (
-							<strong>{displayName}</strong>
-						)}
+						{messageClass === 'sent' ? '' : <strong>{displayName}</strong>}
 						<p>{text}</p>
 						<small>{sentTime === 'Invalid Date' ? '' : sentTime}</small>
 					</div>
