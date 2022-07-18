@@ -108,13 +108,14 @@ function ChatRoom() {
 	const sendMessage = async (e: any) => {
 		e.preventDefault()
 
-		const {uid, photoURL}: any = auth.currentUser
+		const {uid, photoURL, displayName}: any = auth.currentUser
 
 		const docRef = await addDoc(messagesRef, {
 			text: formValue,
 			createdAt: serverTimestamp(),
 			uid,
 			photoURL,
+      displayName
 		})
 
 		setFormValue('')
@@ -152,7 +153,7 @@ function ChatRoom() {
 }
 
 function ChatMessage(props: any) {
-	const {text, uid, photoURL, createdAt} = props.message
+	const {text, uid, photoURL, createdAt, displayName} = props.message
 
 	const sentTime = new Date(createdAt?.seconds * 1000).toLocaleTimeString([], {
 		hour: '2-digit',
@@ -180,7 +181,7 @@ function ChatMessage(props: any) {
 						{messageClass === 'sent' ? (
 							''
 						) : (
-							<strong>{auth?.currentUser?.displayName}</strong>
+							<strong>{displayName}</strong>
 						)}
 						<p>{text}</p>
 						<small>{sentTime === 'Invalid Date' ? '' : sentTime}</small>
